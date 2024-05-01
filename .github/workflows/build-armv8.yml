@@ -115,6 +115,7 @@ jobs:
     - name: 安装Feeds
       if: steps.hash.outputs.REBUILD_TOOLCHAIN == 'true'
       run: |
+        [[ -f "${FEEDS_CONF}" ]] && cp -f ${FEEDS_CONF} $OPENWRT_PATH/feeds.conf.default
         cd $OPENWRT_PATH
         ./scripts/feeds update -a
         ./scripts/feeds install -a
@@ -263,14 +264,15 @@ jobs:
 
     - name: 安装Feeds
       run: |
+        [[ -f "${FEEDS_CONF}" ]] && cp -f ${FEEDS_CONF} $OPENWRT_PATH/feeds.conf.default
         cd $OPENWRT_PATH
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
     - name: 加载diy配置
       run: |
-        [ -e files ] && mv files $OPENWRT_PATH/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRT_PATH/.config
+        [[ -d "files" ]] && mv -f files $OPENWRT_PATH/files
+        [[ -e "${CONFIG_FILE}" ]] && cp -f ${CONFIG_FILE} $OPENWRT_PATH/.config
         chmod +x $GITHUB_WORKSPACE/scripts/*.sh
         chmod +x $GITHUB_WORKSPACE/scripts/*/*.sh
         cd $OPENWRT_PATH
