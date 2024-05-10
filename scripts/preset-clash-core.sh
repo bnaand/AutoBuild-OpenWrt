@@ -16,3 +16,5 @@ wget -qO- $GEOIP_URL > files/etc/openclash/GeoIP.dat
 wget -qO- $GEOSITE_URL > files/etc/openclash/GeoSite.dat
 
 chmod +x files/etc/openclash/core/clash*
+
+echo "$0 completed"

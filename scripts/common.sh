@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set +e
+
 # 移除package
 rm_package() {
     find ./ -maxdepth 4 -iname "$1" -type d | xargs rm -rf
@@ -30,17 +32,17 @@ rm_package "*v2ray*"
 rm_package "*xray*"
 
 # 添加package
-git clone --depth=1 https://github.com/sbwml/luci-app-mosdns.git package/mosdns
-git clone --depth=1 https://github.com/sbwml/v2ray-geodata.git package/v2ray-geodata
-git clone --depth=1 https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
-git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
-git clone --depth=1 https://github.com/sirpdboy/luci-app-partexp.git package/luci-app-partexp
-git clone --depth=1 https://github.com/sirpdboy/netspeedtest.git package/luci-app-netspeedtest
-git clone --depth=1 https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
+git clone -q --depth=1 https://github.com/sbwml/luci-app-mosdns.git package/mosdns
+git clone -q --depth=1 https://github.com/sbwml/v2ray-geodata.git package/v2ray-geodata
+git clone -q --depth=1 https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
+git clone -q --depth=1 https://github.com/sirpdboy/luci-app-autotimeset.git package/luci-app-autotimeset
+git clone -q --depth=1 https://github.com/sirpdboy/luci-app-partexp.git package/luci-app-partexp
+git clone -q --depth=1 https://github.com/sirpdboy/netspeedtest.git package/luci-app-netspeedtest
+git clone -q --depth=1 https://github.com/zzsj0928/luci-app-pushbot.git package/luci-app-pushbot
 
 git_sparse_clone() {
     branch="$1" repourl="$2" repodir="$3"
-    git clone -b $branch --depth=1 --filter=blob:none --sparse $repourl package/cache
+    git clone -q --branch=$branch --depth=1 --filter=blob:none --sparse $repourl package/cache
     git -C package/cache sparse-checkout set $repodir
     mv -f package/cache/$repodir package
     rm -rf package/cache
@@ -56,7 +58,7 @@ git_sparse_clone master https://github.com/vernesong/OpenClash.git luci-app-open
 
 # requires golang latest version
 rm -rf feeds/packages/lang/golang
-git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
+git clone -q --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
 
 # 更改默认主题背景
 cp -f $GITHUB_WORKSPACE/images/bg1.jpg feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
@@ -90,7 +92,7 @@ sed -i 's|admin/network|admin/control|g' feeds/luci/applications/luci-app-sqm/ro
 # 修改插件名字
 replace_text() {
   search_text="$1" new_text="$2"
-  sed -i "s/$search_text/$new_text/g" $(grep "$search_text" -rl ./)
+  sed -i "s/$search_text/$new_text/g" $(grep "$search_text" -rl ./ 2>/dev/null) || echo "not found $search_text"
 }
 
 replace_text "Argon 主题设置" "主题设置"
@@ -106,3 +108,5 @@ replace_text "动态 DNS(DDNS)" "动态DNS"
 replace_text "网络存储" "NAS"
 replace_text "解除网易云音乐播放限制" "音乐解锁"
 replace_text "迷你DLNA" "miniDLNA"
+
+echo "$0 completed"

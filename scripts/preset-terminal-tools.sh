@@ -15,3 +15,5 @@ git clone --depth=1 https://github.com/zsh-users/zsh-completions.git ./.oh-my-zs
 cp $GITHUB_WORKSPACE/scripts/.zshrc .
 
 popd
+
+echo "$0 completed"

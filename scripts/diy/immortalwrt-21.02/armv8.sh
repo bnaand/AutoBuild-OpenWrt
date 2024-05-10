@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set +e
+
 # 修改默认IP和hostname
 sed -i 's/192.168.1.1/10.10.10.1/g' package/base-files/files/bin/config_generate
 sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
@@ -21,7 +23,7 @@ rm_package "zerotier"
 
 git_sparse_clone() {
     branch="$1" repourl="$2" repodir="$3"
-    git clone -b $branch --depth=1 --filter=blob:none --sparse $repourl package/cache
+    git clone -q --branch=$branch --depth=1 --filter=blob:none --sparse $repourl package/cache
     git -C package/cache sparse-checkout set $repodir
     mv -f package/cache/$repodir package
     rm -rf package/cache
@@ -44,7 +46,9 @@ sed -i 's|admin/network|admin/control|g' package/luci-app-sqm/root/usr/share/luc
 
 replace_text() {
   search_text="$1" new_text="$2"
-  sed -i "s/$search_text/$new_text/g" $(grep "$search_text" -rl ./)
+  sed -i "s/$search_text/$new_text/g" $(grep "$search_text" -rl ./ 2>/dev/null) || echo "not found $search_text"
 }
 
 replace_text "DDNS-Go" "DDNSGO"
+
+echo "$0 completed"
