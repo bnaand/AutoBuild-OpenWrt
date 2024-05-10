@@ -28,13 +28,6 @@ rm_package "*transmission*"
 rm_package "*trojan*"
 rm_package "*v2ray*"
 rm_package "*xray*"
-rm_package "*alist"
-rm_package "*ddns-go"
-rm_package "*smartdns"
-rm_package "*sqm*"
-rm_package "minidlna"
-rm_package "miniupnpd"
-rm_package "zerotier"
 
 # 添加package
 git clone --depth=1 https://github.com/sbwml/luci-app-mosdns.git package/mosdns
@@ -61,19 +54,6 @@ git_sparse_clone master https://github.com/linkease/nas-packages.git network/ser
 git_sparse_clone master https://github.com/lisaac/luci-app-dockerman.git applications/luci-app-dockerman
 git_sparse_clone master https://github.com/vernesong/OpenClash.git luci-app-openclash
 
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-alist
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-ddns-go
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-minidlna
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-smartdns
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-sqm
-git_sparse_clone master https://github.com/immortalwrt/packages.git multimedia/minidlna
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/alist
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/ddns-go
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/miniupnpd
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/smartdns
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/sqm-scripts
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/zerotier
-
 # requires golang latest version
 rm -rf feeds/packages/lang/golang
 git clone --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
@@ -93,10 +73,10 @@ sed -i "s|.img.gz|.img.xz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|amlogic_kernel_path.*|amlogic_kernel_path 'https://github.com/ophub/kernel'|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # 修改makefile
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
-find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHREPO/PKG_SOURCE_URL:=https:\/\/github.com/g' {}
+# find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
 
 # 调整菜单
 # sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
@@ -105,7 +85,7 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 sed -i 's/services/control/g' feeds/luci/applications/luci-app-nft-qos/luasrc/controller/*.lua
 sed -i 's/services/control/g' feeds/luci/applications/luci-app-eqos/root/usr/share/luci/menu.d/*.json
 sed -i 's/services/nas/g' feeds/luci/applications/luci-app-ksmbd/root/usr/share/luci/menu.d/*.json
-sed -i 's|admin/network|admin/control|g' package/luci-app-sqm/root/usr/share/luci/menu.d/*.json
+sed -i 's|admin/network|admin/control|g' feeds/luci/applications/luci-app-sqm/root/usr/share/luci/menu.d/*.json
 
 # 修改插件名字
 replace_text() {
@@ -121,8 +101,8 @@ replace_text "QoS Nftables 版" "QoS管理"
 replace_text "SQM QoS" "SQM管理"
 replace_text "SQM 队列管理" "SQM管理"
 replace_text "Turbo ACC 网络加速" "网络加速"
-replace_text "USB 打印服务器" "USB打印设置"
 replace_text "动态 DNS" "动态DNS"
+replace_text "动态 DNS(DDNS)" "动态DNS"
 replace_text "网络存储" "NAS"
 replace_text "解除网易云音乐播放限制" "音乐解锁"
 replace_text "迷你DLNA" "miniDLNA"
