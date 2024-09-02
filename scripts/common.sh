@@ -108,6 +108,7 @@ sed -i 's/services/nas/g' feeds/luci/applications/luci-app-ksmbd/root/usr/share/
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
+sed -i 's|admin/network|admin/control|g' feeds/luci/applications/luci-app-qos/root/usr/share/luci/menu.d/*.json
 sed -i 's|admin/network|admin/control|g' package/luci-app-sqm/root/usr/share/luci/menu.d/*.json
 
 # 修改插件名字
