@@ -38,6 +38,7 @@ rm_package "miniupnpd"
 rm_package "zerotier"
 
 # 添加package
+git clone -q --depth=1 https://github.com/sbwml/luci-app-alist.git package/alist
 git clone -q --depth=1 https://github.com/sbwml/luci-app-mosdns.git package/mosdns
 git clone -q --depth=1 https://github.com/sbwml/v2ray-geodata.git package/v2ray-geodata
 git clone -q --depth=1 https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
@@ -58,28 +59,26 @@ git_sparse_clone() {
 
 git_sparse_clone main https://github.com/linkease/nas-packages-luci.git luci/luci-app-ddnsto
 git_sparse_clone main https://github.com/ophub/luci-app-amlogic.git luci-app-amlogic
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-alist
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-ddns-go
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-minidlna
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-smartdns
-git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-sqm
-git_sparse_clone master https://github.com/immortalwrt/packages.git multimedia/minidlna
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/alist
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/ddns-go
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/dnsproxy
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/miniupnpd
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/smartdns
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/sqm-scripts
-git_sparse_clone master https://github.com/immortalwrt/packages.git net/zerotier
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages.git luci-app-control-timewol
 git_sparse_clone master https://github.com/kiddin9/openwrt-packages.git luci-app-onliner
 git_sparse_clone master https://github.com/linkease/nas-packages.git network/services/ddnsto
 git_sparse_clone master https://github.com/lisaac/luci-app-dockerman.git applications/luci-app-dockerman
 git_sparse_clone master https://github.com/vernesong/OpenClash.git luci-app-openclash
 
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-ddns-go
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-minidlna
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-smartdns
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-sqm
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git multimedia/minidlna
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/ddns-go
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/miniupnpd
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/smartdns
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/sqm-scripts
+git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/zerotier
+
 # requires golang latest version
 rm -rf feeds/packages/lang/golang
-git clone -q --depth=1 https://github.com/sbwml/packages_lang_golang feeds/packages/lang/golang
+git clone -q --depth=1 https://github.com/sbwml/packages_lang_golang.git feeds/packages/lang/golang
 
 # 更改默认主题背景
 cp -f $GITHUB_WORKSPACE/images/bg1.jpg feeds/luci/themes/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
@@ -92,7 +91,6 @@ sed -i "s?/bin/login?/usr/libexec/login.sh?g" feeds/packages/utils/ttyd/files/tt
 
 # amlogic
 sed -i "s|amlogic_firmware_repo.*|amlogic_firmware_repo 'https://github.com/v8040/AutoBuild-OpenWrt'|g" package/luci-app-amlogic/root/etc/config/amlogic
-# sed -i "s|.img.gz|.img.xz|g" package/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|amlogic_kernel_path.*|amlogic_kernel_path 'https://github.com/ophub/kernel'|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 # 修改makefile

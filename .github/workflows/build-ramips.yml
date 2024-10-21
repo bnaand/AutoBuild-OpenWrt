@@ -167,6 +167,7 @@ jobs:
         cp -f ${GITHUB_WORKSPACE}/scripts/init-settings.sh package/emortal/default-settings/files/99-default-settings-chinese
         ${GITHUB_WORKSPACE}/${COM_SCRIPT}
         ${GITHUB_WORKSPACE}/${DIY_SCRIPT}
+        ${GITHUB_WORKSPACE}/scripts/preset-dnsproxy.sh mipsle
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
