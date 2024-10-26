@@ -57,23 +57,23 @@ git_sparse_clone() {
     echo -e "\e[31mFailed to sparse clone $repodir from $repourl($branch).\e[0m"
 }
 
+git_sparse_clone main https://github.com/kiddin9/kwrt-packages.git luci-app-control-timewol
+git_sparse_clone main https://github.com/kiddin9/kwrt-packages.git luci-app-onliner
 git_sparse_clone main https://github.com/linkease/nas-packages-luci.git luci/luci-app-ddnsto
 git_sparse_clone main https://github.com/ophub/luci-app-amlogic.git luci-app-amlogic
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages.git luci-app-control-timewol
-git_sparse_clone master https://github.com/kiddin9/openwrt-packages.git luci-app-onliner
 git_sparse_clone master https://github.com/linkease/nas-packages.git network/services/ddnsto
 git_sparse_clone master https://github.com/lisaac/luci-app-dockerman.git applications/luci-app-dockerman
 git_sparse_clone master https://github.com/vernesong/OpenClash.git luci-app-openclash
 
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-ddns-go
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-minidlna
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-smartdns
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/luci.git applications/luci-app-sqm
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git multimedia/minidlna
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/ddns-go
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/miniupnpd
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/smartdns
-git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/sqm-scripts
+git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-ddns-go
+git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-minidlna
+git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-smartdns
+git_sparse_clone master https://github.com/immortalwrt/luci.git applications/luci-app-sqm
+git_sparse_clone master https://github.com/immortalwrt/packages.git multimedia/minidlna
+git_sparse_clone master https://github.com/immortalwrt/packages.git net/ddns-go
+git_sparse_clone master https://github.com/immortalwrt/packages.git net/miniupnpd
+git_sparse_clone master https://github.com/immortalwrt/packages.git net/smartdns
+git_sparse_clone master https://github.com/immortalwrt/packages.git net/sqm-scripts
 git_sparse_clone openwrt-23.05 https://github.com/immortalwrt/packages.git net/zerotier
 
 # requires golang latest version
